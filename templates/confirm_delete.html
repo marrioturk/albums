@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Delete</title>
+</head>
+<body>
+    <h2>Confirm Deletion</h2>
+    <p>Are you sure you want to delete the album '{{ album_name }}'?</p>
+    <form action="/delete/{{ album_id }}" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Confirm Delete">
+        <a href="/">Cancel</a>
+    </form>
+</body>
+</html>

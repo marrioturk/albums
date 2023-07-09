@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Album Collection</title>
+    <style>
+        table { border-collapse: collapse; }
+        th, td { padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>My Album Collection</h1>
+    <form action="/add" method="GET">
+        <button type="submit">Add Album</button>
+    </form>
+    <br><br>
+    <form action="/" method="GET">
+        <input type="text" name="search" placeholder="Search...">
+        <input type="submit" value="Search">
+        <select name="sort">
+            <option value="">Sort By</option>
+            <option value="artist">Sort Artists Alphabetically</option>
+            <option value="date">Sort by Entry Date</option>
+        </select>
+        <input type="submit" value="Sort">
+    </form>
+    <br>
+    <table>
+        <tr>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Entry Date</th>
+            <th>Action</th>
+        </tr>
+        {% for album in albums %}
+        <tr>
+            <td>{{ album[1] }}</td>
+            <td>{{ album[2] }}</td>
+            <td>{{ album[3] }}</td>
+            <td>
+                <form id="delete-form-{{ album[0] }}" action="/delete/{{ album[0] }}" method="POST" style="display: inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="Delete" onclick="return confirmDelete('{{ album[2] }}');">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        {% if search_term %}
+        <tr>
+            <td colspan="4">Search results for: "{{ search_term }}"</td>
+        </tr>
+        {% endif %}
+    </table>
+
+    <script>
+        function confirmDelete(albumName) {
+            return confirm("Are you sure you want to delete the album '" + albumName + "'?");
+        }
+    </script>
+</body>
+</html>
